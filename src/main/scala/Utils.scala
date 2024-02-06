@@ -102,11 +102,11 @@ object Utils {
         parser(2, List(1))
 
     def factorial(n: BigInt): BigInt =
-            @tailrec
-            def helper(n: BigInt, acc: BigInt): BigInt =
-                if n==1 then acc
-                else helper(n-1, acc*n)
-            helper(n, 1)
+        @tailrec
+        def helper(n: BigInt, acc: BigInt): BigInt =
+            if n==1 then acc
+            else helper(n-1, acc*n)
+        helper(n, 1)
 
     def from(x: BigInt): LazyList[BigInt] = LazyList.cons(x, from(x + 1))
     

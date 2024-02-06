@@ -58,6 +58,13 @@ def sqrt(number : BigInt) = {
     n1
 }
 
+def pow(number: BigInt, power: Int): BigInt =
+    def helper(p: Int, acc: BigInt): BigInt =
+        if p == 1 then acc
+        else helper(p-1, acc*number)
+    
+    helper(power, number)
+
 def isPrimeBigInt(n: BigInt): Boolean =
     @tailrec
     def helper(n: BigInt, acc: BigInt): Boolean =
@@ -76,5 +83,12 @@ def longestChainPrimes(list: LazyList[BigInt]): Int = list.zipWithIndex.find((n,
 //     a <- -999 to 999
 //     b <- -1000 to 1000
 // yield longestChainPrimes(quadraticPrime(a, b))
+
+def factorial(n: BigInt): BigInt =
+    @tailrec
+    def helper(n: BigInt, acc: BigInt): BigInt =
+        if n==1 then acc
+        else helper(n-1, acc*n)
+    helper(n, 1)
 
 

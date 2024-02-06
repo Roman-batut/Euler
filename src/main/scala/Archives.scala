@@ -313,7 +313,6 @@ class Archives:
         04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
         """
 
-
         def createTreeFromString(s: String): Tree[String] =
             def helper(treeList: List[String], n: Int): Tree[String] =
                 if treeList.tail.tail.isEmpty then Tree.Leaf(treeList.head.charAt(n*2).toString() + treeList.head.charAt(n*2+1))
@@ -487,6 +486,39 @@ class Archives:
 
         fibo.zipWithIndex.map((e, i) => (e, i+1)).find((e, i) => e.toString().size>=1000)
 
+    def fourtyeight =
+        var t = BigInt(0)
+        for i <- 1 to 1000 do
+            t+=pow(BigInt(i), i)
+
+        t.toString().takeRight(10)
+
+    def thirty = 
+        def sumOfNthPow(n: Int): LazyList[BigInt] = natural.map(e => e.toString().toList.map(_.toString().toInt).foldRight(BigInt(0))((a, b) => pow(a, n) + b))
+
+        sumOfNthPow(5).take(1000000).toList.zipWithIndex.filter((e, i) => e==i+1).map(_._1).foldRight(BigInt(0))(_+_)-1
+
+    def twentyeight =
+        def sumDiagSpiral(n: Int): Int =
+            if n == 1 then 1 
+            else n*n + n*(n-1)+1 + n*(n-2)+2 + n*(n-3)+3 + sumDiagSpiral(n-2)
+
+        sumDiagSpiral(1001)
+
+    def twentynine = 
+        def removeDuplicatesOffSortedList[T](l: List[T]): List[T] =
+            l match
+                case head :: Nil => head :: Nil
+                case head :: next => if head==next.head then removeDuplicatesOffSortedList(next) else head :: removeDuplicatesOffSortedList(next)
+
+        removeDuplicatesOffSortedList(
+            (for 
+                a <- 2 to 100
+                b <- 2 to 100
+            yield pow(a, b)).sorted.toList
+        ).size
+
+    // def sixtyseven =
 
 
 
