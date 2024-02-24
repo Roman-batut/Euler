@@ -73,22 +73,5 @@ def isPrimeBigInt(n: BigInt): Boolean =
             if n%acc == 0 then false
             else helper(n, acc+1)
 
-    helper(n, 2)
-
-def quadraticPrime(a: Int, b: Int): LazyList[BigInt] = from(0).map(n => n*n+n*a+b)
-
-def longestChainPrimes(list: LazyList[BigInt]): Int = list.zipWithIndex.find((n, i) => !isPrimeBigInt(n)).get._2
-
-// for 
-//     a <- -999 to 999
-//     b <- -1000 to 1000
-// yield longestChainPrimes(quadraticPrime(a, b))
-
-def factorial(n: BigInt): BigInt =
-    @tailrec
-    def helper(n: BigInt, acc: BigInt): BigInt =
-        if n==1 then acc
-        else helper(n-1, acc*n)
-    helper(n, 1)
-
+    if n <= 0 then false else helper(n, 2)
 

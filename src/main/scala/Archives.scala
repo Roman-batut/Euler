@@ -518,10 +518,100 @@ class Archives:
             yield pow(a, b)).sorted.toList
         ).size
 
-    // def sixtyseven =
+    def thirtyfour = 
+        lazy val sumOfFactDigits: LazyList[BigInt] = natural.map(e => e.toString().toList.map(_.toString().toInt).foldRight(BigInt(0))((a, b) => factorial(a)+b))
+        sumOfFactDigits.take(1000000).zipWithIndex.filter((e, i) => e == i+1).map(_._1).toList
+
+    def thirtysix = 
+        def base10To2(n: BigInt): String =
+            def helper(n: BigInt, acc: String): String = 
+                if n == 1 then "1" ++ acc
+                else helper(n/2, (n%2).toString() ++ acc)
+
+            helper(n, "")
+
+        natural.take(999999).filter(n => isPalindrome(base10To2(n)) && isPalindrome(n.toString())).toList.foldRight(BigInt(0))(_+_)
+
+    def twentyseven = 
+        def quadraticPrime(a: Int, b: Int): List[BigInt] = from(0).take(200).map(n => n*n+n*a+b).toList
+
+        def longestChainPrimes(list: List[BigInt]): Int = list.zipWithIndex.find((n, i) => !isPrimeBigInt(n)).get._2
+
+        (for 
+            a <- -999 to 999
+            b <- -1000 to 1000
+        yield (longestChainPrimes(quadraticPrime(a, b)), a, b)).max
+
+    def thirtyone = 
+        def coinSums(n : Int): Int =
+            def helper(rest: Int, prev: Int): Int =
+                if rest >= 200 then 
+                    if prev == 200 then helper(rest-200, 200) + helper(rest-100, 100) + helper(rest-50, 50) + helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 100 then helper(rest-100, 100) + helper(rest-50, 50) + helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 50 then helper(rest-50, 50) + helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 20 then helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 10 then helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 5 then helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 100 then 
+                    if prev >= 100 then helper(rest-100, 100) + helper(rest-50, 50) + helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 50 then helper(rest-50, 50) + helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 20 then helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 10 then helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 5 then helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 50 then 
+                    if prev >= 50 then helper(rest-50, 50) + helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 20 then helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 10 then helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 5 then helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 20 then
+                    if prev >= 20 then helper(rest-20, 20) + helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 10 then helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 5 then helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 10 then 
+                    if prev >= 10 then helper(rest-10, 10) + helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 5 then helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 5 then
+                    if prev >= 5 then helper(rest-5, 5) + helper(rest-2, 2) + helper(rest-1, 1)
+                    else if prev == 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 2 then 
+                    if prev >= 2 then helper(rest-2, 2) + helper(rest-1, 1)
+                    else helper(rest-1, 1)
+                else if rest >= 1 then 
+                    helper(rest-1, 1)
+                else 1
+
+            helper(n, 200)
 
 
+        coinSums(200)
 
+    def thirtyfive = 
+        def isCircularPrime(n: BigInt): Boolean = 
+            !circularPerm(n.toString()).map(n => isPrimeBigInt(n.toInt)).contains(false)
+
+        def circularPerm(s: String): List[String] =
+            def helper(s: String, acc: Int): List[String] =
+                if acc == s.size then Nil
+                else
+                    val newS = s.tail + s.head 
+                    newS :: helper(newS, acc+1)
+
+            helper(s, 0)
+
+        natural.take(1000000).map(isCircularPrime(_)).toList.count(_==true)
+
+    
 
 
 
